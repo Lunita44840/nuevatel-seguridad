@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Cliente — NuevaTel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    body { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--bg); }
+    .login-wrap { width: 100%; max-width: 440px; padding: 24px; }
+    .login-card {
+      background: var(--card); border: 1px solid rgba(76,175,80,0.2);
+      border-radius: 18px; padding: 42px 38px;
+      box-shadow: 0 0 40px rgba(76,175,80,0.05), 0 0 80px rgba(0,119,182,0.08);
+    }
+    .login-logo { text-align: center; margin-bottom: 28px; }
+    .login-logo img { height: 52px; width: auto; }
+    .login-title { font-family: 'Syne', sans-serif; font-size: 1.4em; font-weight: 800; color: #fff; text-align: center; margin-bottom: 6px; }
+    .login-sub { text-align: center; color: var(--text-muted); font-size: 0.85em; margin-bottom: 28px; }
+    .form-group { display: flex; flex-direction: column; gap: 14px; }
+    .field-label { font-size: 0.8em; font-weight: 600; color: #6fcf72; margin-bottom: 5px; display: block; }
+    .field-wrap { margin-bottom: 4px; }
+    .form-input { width: 100%; border-color: rgba(76,175,80,0.2); }
+    .form-input:focus { border-color: #6fcf72 !important; }
+    .btn-login {
+      width: 100%; margin-top: 10px;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff; border: none; padding: 14px; border-radius: 10px;
+      font-size: 1em; font-weight: 700; font-family: 'DM Sans', sans-serif;
+      cursor: pointer; transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(0,180,216,0.3);
+    }
+    .btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,180,216,0.45); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 22px 0; }
+    .login-links { text-align: center; font-size: 0.83em; color: var(--text-muted); }
+    .login-links a { color: #6fcf72; }
+    .error-msg {
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+      color: #fca5a5; padding: 10px 14px; border-radius: 8px;
+      font-size: 0.84em; margin-bottom: 16px; display: none;
+    }
+    .error-msg.show { display: block; }
+  </style>
+</head>
+<body>
+<div class="login-wrap">
+  <div class="login-card">
+    <div class="login-logo">
+      <a href="index.php">
+        <img src="img/logo.png" alt="NuevaTel PCS" />
+      </a>
+    </div>
+    <h2 class="login-title">Portal Cliente</h2>
+    <p class="login-sub">Ingresa tus datos para acceder a tu cuenta</p>
+    <div class="error-msg" id="errMsg">Usuario o contraseña incorrectos.</div>
+    <form action="auth.php" method="POST" class="form-group" id="loginForm">
+      <div class="field-wrap">
+        <label class="field-label">Usuario / CI</label>
+        <input type="text" name="usuario" class="form-input" placeholder="Ej: 12345678" autocomplete="off" />
+      </div>
+      <div class="field-wrap">
+        <label class="field-label">Contraseña</label>
+        <input type="password" name="password" class="form-input" placeholder="Tu contraseña" autocomplete="off" />
+      </div>
+      <button type="submit" class="btn-login">Iniciar sesión →</button>
+    </form>
+    <hr class="divider" />
+    <div class="login-links">
+      <a href="#">¿Olvidaste tu contraseña?</a> · <a href="index.php">Volver al inicio</a>
+    </div>
+  </div>
+</div>
+<script src="js/main.js"></script>
+</body>
+</html>

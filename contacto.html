@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contacto — NuevaTel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.php" class="logo">
+      <img src="img/logo.png" alt="NuevaTel PCS" style="height: 48px; width: auto;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.php#servicios">Servicios</a></li>
+      <li><a href="index.php#planes">Planes</a></li>
+      <li><a href="index.php#cobertura">Cobertura</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="login.html" class="btn-nav">Portal Cliente</a></li>
+    </ul>
+    <button class="hamburger" id="ham">☰</button>
+  </div>
+</nav>
+
+<section style="padding: 120px 0 80px;">
+  <div class="container">
+    <div class="section-label">Contáctanos</div>
+    <h2 class="section-title">Solicita tu servicio<br/><span class="accent">hoy mismo</span></h2>
+    <div style="display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start;">
+      <div>
+        <div style="background: var(--card); border: 1px solid rgba(76,175,80,0.2); border-radius: 14px; padding: 28px; margin-bottom: 20px;">
+          <h3 style="font-family: 'Syne', sans-serif; font-size: 1em; margin-bottom: 16px; color: #6fcf72;">📍 Oficina principal</h3>
+          <p style="font-size: 0.88em; color: var(--text-dim); line-height: 1.8;">
+            Av. América Nro. 123, Zona Central<br/>
+            Cochabamba, Bolivia<br/>
+            Tel: +591 4 444-5678<br/>
+            Email: info@nuevatel.com.bo
+          </p>
+        </div>
+        <div style="background: var(--card); border: 1px solid rgba(0,180,216,0.2); border-radius: 14px; padding: 28px;">
+          <h3 style="font-family: 'Syne', sans-serif; font-size: 1em; margin-bottom: 16px; color: var(--accent);">🕐 Horarios</h3>
+          <p style="font-size: 0.88em; color: var(--text-dim); line-height: 2;">
+            Lunes a Viernes: 8:00 – 20:00<br/>
+            Sábado: 9:00 – 15:00<br/>
+            Emergencias técnicas: 24/7
+          </p>
+        </div>
+      </div>
+      <form action="php/contacto.php" method="POST" style="display: flex; flex-direction: column; gap: 16px;">
+        <input type="text" name="nombre" placeholder="Nombre completo *" class="form-input" />
+        <input type="email" name="email" placeholder="Correo electrónico *" class="form-input" />
+        <input type="tel" name="telefono" placeholder="Teléfono (ej: 70123456)" class="form-input" />
+        <input type="text" name="direccion" placeholder="Dirección para instalación" class="form-input" />
+        <select name="plan" class="form-input" style="cursor: pointer;">
+          <option value="">Selecciona un plan...</option>
+          <option value="basico">Básico — 50 Mbps (Bs. 150/mes)</option>
+          <option value="hogar_plus">Hogar Plus — 200 Mbps (Bs. 280/mes)</option>
+          <option value="fibra_max">Fibra Max — 500 Mbps (Bs. 420/mes)</option>
+          <option value="satelital">Satelital (consultar precio)</option>
+          <option value="empresas">NuevaTel Empresas</option>
+        </select>
+        <textarea name="mensaje" placeholder="Mensaje adicional o consulta..." class="form-textarea" rows="4"></textarea>
+        <button type="submit" class="btn-primary" style="align-self: flex-start;">Enviar solicitud →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 NuevaTel PCS S.R.L. — Bolivia · Todos los derechos reservados</p>
+      <!-- Server: Apache/2.4.49 PHP/7.2.0 MySQL/5.7 -->
+    </div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
