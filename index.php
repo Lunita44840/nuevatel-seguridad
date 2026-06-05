@@ -13,7 +13,7 @@
 <!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-inner">
-    <a href="index.php" class="logo">
+    <a href="/nuevatel/" class="logo">
       <img src="img/logo.png" alt="NuevaTel PCS" style="height: 48px; width: auto;" />
     </a>
     <ul class="nav-links">
@@ -197,7 +197,7 @@
         <div class="info-item">✉️ info@nuevatel.com.bo</div>
         <div class="info-item">🕐 Lun–Vie 8:00–20:00 | Emergencias 24/7</div>
       </div>
-      <form action="contacto.php" method="POST" class="contact-form">
+      <form action="php/contacto.php" method="POST" class="contact-form">
         <input type="text" name="nombre" placeholder="Tu nombre completo" class="form-input" />
         <input type="email" name="email" placeholder="Tu correo electrónico" class="form-input" />
         <input type="tel" name="telefono" placeholder="Tu número de teléfono" class="form-input" />
@@ -230,7 +230,7 @@
         <ul>
           <li><a href="#">Acerca de</a></li>
           <li><a href="#">Trabaja con nosotros</a></li>
-          <li><a href="admin/">Administración</a></li>
+          <li><a href="/nuevatel/admin/">Administración</a></li>
           <li><a href="#">Términos de servicio</a></li>
         </ul>
       </div>

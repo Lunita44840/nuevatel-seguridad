@@ -4,103 +4,108 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — NuevaTel</title>
-  <!--
-    ⚠️ VULN #4: Panel de admin accesible sin verificación de autenticación
-    En un sistema real debería verificar sesión activa con rol=admin
-    Aquí no hay verificación — cualquiera puede acceder directamente
-    via: http://nuevatel.local/admin/
-  -->
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #060a12; --bg2: #0b1120; --card: #0e1628;
-      --border: #1e2d47; --accent: #00b4d8; --text: #e2eaf5;
-      --text-muted: #6b82a0; --red: #ef4444; --green: #10b981;
-      --yellow: #f59e0b;
+      --bg: #010407; --bg2: #040a14; --card: #060d1a;
+      --border: #0e2040; --accent: #00b4d8; --text: #ddeeff;
+      --text-muted: #5a7a9a; --red: #ef4444; --green: #10b981; --yellow: #f59e0b;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; display: flex; min-height: 100vh; }
-    
-    /* Sidebar */
+
     .sidebar {
-      width: 220px; background: var(--bg2); border-right: 1px solid var(--border);
+      width: 230px; background: var(--bg2);
+      border-right: 1px solid rgba(76,175,80,0.15);
       display: flex; flex-direction: column; padding: 24px 0; flex-shrink: 0;
     }
     .sidebar-logo {
-      padding: 0 20px 24px; border-bottom: 1px solid var(--border);
-      font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.1em;
-      color: var(--accent); display: flex; align-items: center; gap: 8px;
+      padding: 0 20px 20px; border-bottom: 1px solid rgba(76,175,80,0.15);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .sidebar-logo img { height: 36px; width: auto; }
+    .sidebar-logo span {
+      font-family: 'Syne', sans-serif; font-size: 0.7em; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 2px; color: #6fcf72;
     }
     .sidebar-menu { padding: 16px 12px; flex: 1; }
-    .menu-label { font-size: 0.68em; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); padding: 0 8px; margin-bottom: 6px; margin-top: 16px; }
+    .menu-label { font-size: 0.65em; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); padding: 0 8px; margin-bottom: 6px; margin-top: 16px; }
     .menu-item {
       display: flex; align-items: center; gap: 10px; padding: 9px 10px;
-      border-radius: 7px; font-size: 0.88em; color: var(--text-muted);
+      border-radius: 7px; font-size: 0.87em; color: var(--text-muted);
       cursor: pointer; transition: all 0.18s; margin-bottom: 2px;
     }
-    .menu-item:hover, .menu-item.active { background: rgba(0,180,216,0.1); color: var(--accent); }
-    .sidebar-footer { padding: 16px 20px; border-top: 1px solid var(--border); font-size: 0.78em; color: var(--text-muted); }
+    .menu-item:hover, .menu-item.active { background: rgba(0,180,216,0.08); color: var(--accent); }
+    .sidebar-footer {
+      padding: 16px 20px; border-top: 1px solid rgba(76,175,80,0.1);
+      font-size: 0.75em; color: var(--text-muted); line-height: 1.6;
+    }
 
-    /* Main */
     .main { flex: 1; display: flex; flex-direction: column; overflow: auto; }
     .topbar {
-      background: var(--bg2); border-bottom: 1px solid var(--border);
-      padding: 0 28px; height: 60px; display: flex; align-items: center;
+      background: var(--bg2); border-bottom: 1px solid rgba(76,175,80,0.1);
+      padding: 0 28px; height: 62px; display: flex; align-items: center;
       justify-content: space-between; flex-shrink: 0;
     }
-    .topbar h1 { font-family: 'Syne', sans-serif; font-size: 1.05em; font-weight: 700; }
-
-    /* ⚠️ VULN banner educativo */
-    .vuln-banner {
-      background: rgba(239,68,68,0.08); border-bottom: 1px solid rgba(239,68,68,0.2);
-      padding: 10px 28px; font-size: 0.78em; color: #fca5a5; font-family: monospace;
+    .topbar h1 { font-family: 'Syne', sans-serif; font-size: 1em; font-weight: 700; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; font-size: 0.82em; color: var(--text-muted); }
+    .user-badge {
+      background: rgba(0,180,216,0.1); border: 1px solid rgba(0,180,216,0.2);
+      color: var(--accent); padding: 4px 12px; border-radius: 20px;
+      font-size: 0.85em; font-weight: 600;
+    }
+    .logout-btn {
+      background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2);
+      color: #f87171; padding: 4px 12px; border-radius: 20px;
+      font-size: 0.85em; cursor: pointer; text-decoration: none;
     }
 
     .content { padding: 28px; flex: 1; }
-    
-    /* Stats row */
     .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
     .stat-card {
       background: var(--card); border: 1px solid var(--border); border-radius: 12px;
-      padding: 20px; transition: border-color 0.2s;
+      padding: 20px; transition: all 0.2s;
     }
-    .stat-card:hover { border-color: var(--accent); }
-    .stat-label { font-size: 0.75em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .stat-card:hover { border-color: rgba(76,175,80,0.3); transform: translateY(-2px); }
+    .stat-label { font-size: 0.72em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
     .stat-val { font-family: 'Syne', sans-serif; font-size: 2em; font-weight: 800; color: #fff; }
-    .stat-sub { font-size: 0.75em; color: var(--green); margin-top: 4px; }
+    .stat-sub { font-size: 0.74em; color: var(--green); margin-top: 5px; }
 
-    /* Table */
     .table-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 24px; }
     .table-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    .table-header h3 { font-family: 'Syne', sans-serif; font-size: 0.95em; font-weight: 700; }
+    .table-header h3 { font-family: 'Syne', sans-serif; font-size: 0.92em; font-weight: 700; }
     table { width: 100%; border-collapse: collapse; }
-    th { padding: 11px 16px; text-align: left; font-size: 0.75em; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); border-bottom: 1px solid var(--border); }
-    td { padding: 12px 16px; font-size: 0.85em; border-bottom: 1px solid rgba(30,45,71,0.5); }
+    th { padding: 11px 16px; text-align: left; font-size: 0.72em; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+    td { padding: 12px 16px; font-size: 0.85em; border-bottom: 1px solid rgba(14,32,64,0.8); }
     tr:last-child td { border-bottom: none; }
-    tr:hover td { background: rgba(0,180,216,0.03); }
+    tr:hover td { background: rgba(0,180,216,0.02); }
     .badge { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 0.75em; font-weight: 600; }
     .badge-green { background: rgba(16,185,129,0.15); color: var(--green); }
     .badge-red { background: rgba(239,68,68,0.12); color: var(--red); }
     .badge-yellow { background: rgba(245,158,11,0.12); color: var(--yellow); }
+    .badge-blue { background: rgba(0,180,216,0.12); color: var(--accent); }
 
-    /* Buscar usuario - vuln XSS -->
     .search-bar { display: flex; gap: 10px; }
     .search-bar input {
       background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      padding: 8px 14px; color: var(--text); font-family: 'DM Sans'; font-size: 0.85em;
-      outline: none; width: 250px;
+      padding: 7px 14px; color: var(--text); font-family: 'DM Sans'; font-size: 0.83em;
+      outline: none; width: 220px; transition: border-color 0.2s;
     }
+    .search-bar input:focus { border-color: #6fcf72; }
     .btn-sm {
-      background: var(--accent); color: var(--bg); border: none; padding: 8px 16px;
-      border-radius: 8px; font-size: 0.82em; font-weight: 700; cursor: pointer;
+      background: linear-gradient(135deg, #0077b6, #00b4d8); color: #fff;
+      border: none; padding: 7px 16px; border-radius: 8px;
+      font-size: 0.82em; font-weight: 700; cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="sidebar-logo">◈ NuevaTel Admin</div>
+  <div class="sidebar-logo">
+    <img src="../img/logo.png" alt="NuevaTel" />
+    <span>Panel Administrativo</span>
+  </div>
   <nav class="sidebar-menu">
     <div class="menu-label">Principal</div>
     <div class="menu-item active">📊 Dashboard</div>
@@ -109,7 +114,6 @@
     <div class="menu-item">🌐 Servicios</div>
     <div class="menu-label">Sistema</div>
     <div class="menu-item">⚙️ Configuración</div>
-    <!-- ⚠️ VULN: Opciones de BD expuestas en el menú admin -->
     <div class="menu-item">🗄️ Base de datos</div>
     <div class="menu-item">📁 Archivos</div>
     <div class="menu-item">📜 Logs del servidor</div>
@@ -118,28 +122,20 @@
     <div class="menu-item">🚪 Cerrar sesión</div>
   </nav>
   <div class="sidebar-footer">
-    <!-- ⚠️ VULN #6: Info de versiones expuesta -->
     v1.0.0 · Apache/2.4.49<br/>PHP 7.2.0 · MySQL 5.7
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
   <div class="topbar">
     <h1>Dashboard — Panel Administrativo</h1>
-    <!-- ⚠️ VULN #4: Sin verificación de sesión — acceso libre -->
-    <span style="font-size:0.82em; color: var(--text-muted)">Sesión: <strong style="color:var(--accent)">admin</strong> (no verificado)</span>
-  </div>
-
-  <!-- Banner educativo del proyecto -->
-  <div class="vuln-banner">
-    ⚠️ [PROYECTO SEGURIDAD] VULN #4 activa: Este panel es accesible sin autenticación.
-    URL directa: http://nuevatel.local/admin/ — no hay verificación de sesión PHP.
+    <div class="topbar-right">
+      <span class="user-badge">👤 admin</span>
+      <a href="/nuevatel/admin/login.html" class="logout-btn">Cerrar sesión</a>
+    </div>
   </div>
 
   <div class="content">
-
-    <!-- STATS -->
     <div class="stats-row">
       <div class="stat-card">
         <div class="stat-label">Clientes activos</div>
@@ -163,27 +159,22 @@
       </div>
     </div>
 
-    <!-- TABLA CLIENTES -->
     <div class="table-card">
       <div class="table-header">
         <h3>👥 Clientes registrados</h3>
-        <!-- ⚠️ VULN #13: Búsqueda de clientes vulnerable a XSS reflejado -->
         <form method="GET" class="search-bar">
           <input type="text" name="buscar" placeholder="Buscar cliente..." />
           <button class="btn-sm" type="submit">Buscar</button>
         </form>
       </div>
-      <!-- ⚠️ VULN #13 activa: refleja el parámetro sin sanitizar -->
       <?php if(isset($_GET['buscar'])): ?>
-        <div style="padding:10px 20px; font-size:0.82em; color:#6b82a0; font-family:monospace;">
+        <div style="padding:10px 20px; font-size:0.82em; color:#5a7a9a; font-family:monospace;">
           Resultados para: <?= $_GET['buscar'] ?>
         </div>
       <?php endif; ?>
       <table>
         <thead>
-          <tr>
-            <th>#ID</th><th>Nombre</th><th>CI</th><th>Plan</th><th>Estado</th><th>Fecha alta</th>
-          </tr>
+          <tr><th>#ID</th><th>Nombre</th><th>CI</th><th>Plan</th><th>Estado</th><th>Fecha alta</th></tr>
         </thead>
         <tbody>
           <tr><td>001</td><td>María López</td><td>8712345</td><td>Hogar Plus</td><td><span class="badge badge-green">Activo</span></td><td>2024-01-15</td></tr>
@@ -195,25 +186,21 @@
       </table>
     </div>
 
-    <!-- CREDENCIALES EXPUESTAS -->
     <div class="table-card">
       <div class="table-header">
         <h3>🔑 Usuarios del sistema</h3>
-        <!-- ⚠️ VULN #14: Contraseñas visibles en el panel admin -->
       </div>
       <table>
         <thead>
-          <tr><th>Usuario</th><th>Rol</th><th>Password (MD5)</th><th>Password real</th></tr>
+          <tr><th>Usuario</th><th>Rol</th><th>Password (MD5)</th><th>Password</th></tr>
         </thead>
         <tbody>
-          <!-- ⚠️ VULN #8 + #14: Hashes MD5 fácilmente reversibles, y en este panel la pass en texto "plano" -->
           <tr><td>admin</td><td><span class="badge badge-red">Administrador</span></td><td><code style="font-size:0.75em;color:#f87171">5f4dcc3b5aa765d61d8327deb882cf99</code></td><td style="color:#fca5a5">password</td></tr>
           <tr><td>soporte1</td><td><span class="badge badge-yellow">Soporte</span></td><td><code style="font-size:0.75em;color:#f87171">827ccb0eea8a706c4c34a16891f84e7b</code></td><td style="color:#fca5a5">12345</td></tr>
           <tr><td>tecnico</td><td><span class="badge badge-yellow">Técnico</span></td><td><code style="font-size:0.75em;color:#f87171">e10adc3949ba59abbe56e057f20f883e</code></td><td style="color:#fca5a5">123456</td></tr>
         </tbody>
       </table>
     </div>
-
   </div>
 </div>
 

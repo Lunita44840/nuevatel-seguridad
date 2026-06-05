@@ -61,9 +61,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // session_regenerate_id() — FALTA
         
         if ($user['rol'] === 'admin') {
-            header("Location: admin/dashboard.php");
+            header("Location: /nuevatel/admin/dashboard.html");
         } else {
-            header("Location: portal/home.php");
+            header("Location: /nuevatel/portal_cliente.php");
         }
         exit;
     } else {
